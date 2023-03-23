@@ -9,6 +9,7 @@ function App() {
     // Submit your form with the filebase64 as 
     // one of your fields
     console.log({filebase64})
+    handleUploadClick()
     alert("here you'd submit the form using\n the filebase64 like any other field")
   }
 
@@ -29,6 +30,25 @@ function App() {
     }
   }
 
+  const handleUploadClick = () => {
+    if (!filebase64) {
+      return;
+    }
+
+    // 👇 Uploading the file using the fetch API to the server
+    fetch('https://faas-be.cyifan.dev/faas/uploadCode', {
+      method: 'POST',
+      body: filebase64, //
+      // 👇 Set headers manually for single file upload
+      // headers: {
+      //   'content-type': filebase64.type,
+      //   'content-length': `${filebase64.size}`, // 👈 Headers need to be a string
+      // },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="App">
