@@ -20,6 +20,8 @@ function App() {
       console.log("This file upload is of type:",fileType)
       const reader = new FileReader()
       reader.readAsBinaryString(fileRef)
+      // console.log(`File name: ${fileRef.name}`); // e.g my.png
+      // console.log(`Last modified: ${fileRef.lastModified}`); // e.g 1552830408824
       reader.onload=(ev: any) => {
         // convert it to base64
         setFileBase64(`data:${fileType};base64,${btoa(ev.target.result)}`)
