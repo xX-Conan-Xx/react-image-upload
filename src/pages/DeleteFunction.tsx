@@ -15,6 +15,7 @@ function DeleteFunction() {
     const endpoint = res.data['functionEndpoint'];
     const status = res.data.status;
     setStatus({ endpoint, status });
+    alert('Delete Already.')
   };
 
   return (
@@ -27,14 +28,8 @@ function DeleteFunction() {
         <input type="text" className="form-control" id="uuid-input" value={uuid} onChange={handleUuidChange} />
       </div>
       <button className="btn btn-primary" onClick={handleGetStatus} disabled={!uuid}>
-        Get Info
+        Delete it!
       </button>
-      {status.status !== -1 && (
-        <div>
-          <p>Endpoint: {status.endpoint}</p>
-          <p>Status: {status.status}</p>
-        </div>
-      )}
     </div>
   );
 }

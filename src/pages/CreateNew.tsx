@@ -179,13 +179,20 @@ function CreateNew() {
         if (res.status === 200) {
           setUploadStatus('Great! Your file has been Transferred.\nDeploying ...');
           var st = -2;
-          while(st!=3&&st!=4){
+          var count = 0
+          while(st!=3&&st!=4&&count<10){
             const response = await handleGetStatus()
             st = response.status
+            setInfoLink(response.endpoint)
             console.log(response.status)
             await new Promise(resolve => setTimeout(resolve, 5000));
+            count = count + 1
           }
-          setUploadStatus('The deploying is finished')
+          if (count>=10){
+            setUploadStatus('Deploy timeout.')
+          }else{
+            setUploadStatus('The deploying is finished.')
+          }
         } else {
           setUploadStatus('The deploying has failed.');
         }
@@ -259,7 +266,7 @@ function CreateNew() {
               </div>
             )
           }
-          {uploadStatus == 'The deploying is finished' && (
+          {uploadStatus == 'The deploying is finished.' && (
             <div className="mt-4">
               <h5>Function URL:</h5>
               <p>{infoLink}</p>

@@ -10,11 +10,22 @@ function GetLink() {
   };
 
   const handleGetStatus = async () => {
-    const res = await axios.post("https://faas-be.cyifan.dev/faas/getStatus", {"uuid" : uuid });
-    console.log(res)
-    const endpoint = res.data['functionEndpoint'];
-    const status = res.data.status;
-    setStatus({ endpoint, status });
+    try{
+      const res = await axios.post("https://faas-be.cyifan.dev/faas/getStatus", {"uuid" : uuid });
+      console.log(res)
+      const endpoint = res.data['functionEndpoint'];
+      const status = res.data.status;
+      console.log(res.data.status)
+      if(status != 1 && status != 3 && status != 4){
+        alert('UUID does not exist!!!');
+      }else if(status==1)
+      {
+        alert('Your code is still deploying.');
+      }
+      setStatus({ endpoint, status });
+    } catch(error){
+      alert('UUID does not exist!!!')
+    }
   };
 
   return (
@@ -27,12 +38,12 @@ function GetLink() {
         <input type="text" className="form-control" id="uuid-input" value={uuid} onChange={handleUuidChange} />
       </div>
       <button className="btn btn-primary" onClick={handleGetStatus} disabled={!uuid}>
-        Get Info
+        Get Link
       </button>
-      {status.status !== -1 && (
+      {(status.status !== -1 && (status.status == 3||status.status==4)) && (
         <div>
+          <p>    </p>
           <p>Endpoint: {status.endpoint}</p>
-          <p>Status: {status.status}</p>
         </div>
       )}
     </div>

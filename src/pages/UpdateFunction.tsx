@@ -15,15 +15,18 @@ function UpdateFunction() {
   };
 
   const handleGetStatus = async () => {
-    setIsLoading(true); // set loading state to true
-    const res = await axios.post("https://faas-be.cyifan.dev/faas/getStatus", {"uuid" : uuid });
-    const endpoint = res.data['functionEndpoint'];
-    const status = res.data.status;
-    setStatus({ endpoint, status });
-    console.log(status)
-    setIsLoading(false); // set loading state to false
-    if (status!=3&&status!=4){
-      alert("UUID is not accessible!!!")
+    try{
+      const res = await axios.post("https://faas-be.cyifan.dev/faas/getStatus", {"uuid" : uuid });
+      console.log(res)
+      const endpoint = res.data['functionEndpoint'];
+      const status = res.data.status;
+      console.log(res.data.status)
+      if(status != 1 && status != 3 && status != 4){
+        alert('UUID does not exist!!!');
+      }
+      setStatus({ endpoint, status });
+    } catch(error){
+      alert('UUID does not exist!!!')
     }
   };
 
@@ -48,13 +51,20 @@ function UpdateFunction() {
         if (res.status === 200) {
           setUploadStatus('Great! Your file has been Transferred.\nDeploying ...');
           var st = -2;
-          while(st!==3 && st!==4){
+          var count1 = 0;
+          while(st!==3 && st!==4 && count1<10){
             await handleGetStatus()
             st = status.status
+            setInfoLink(status.endpoint)
             console.log(status.status)
+            count1 = count1+1
             await new Promise(resolve => setTimeout(resolve, 5000));
           }
-          setUploadStatus('The deploying is finished')
+          if (count1>=10){
+            setUploadStatus('Deploy timeout.')
+          }else{
+            setUploadStatus('The deploying is finished.')
+          }
         } else {
           setUploadStatus('The deploying has failed.');
         }
@@ -77,7 +87,7 @@ function UpdateFunction() {
       <button className="btn btn-primary" onClick={handleGetStatus} disabled={!uuid}>
         Get Info
       </button>
-      {(status.status == 3 || status.status == 4) && (
+      {(status.status == 3 || status.status == 4 || status.status == 1) && (
         <div className="mt-4">
           <h4>Upload Code:</h4>
           <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} />
@@ -92,7 +102,7 @@ function UpdateFunction() {
               </div>
             )
           }
-          {uploadStatus === 'The deploying is finished' && (
+          {uploadStatus === 'The deploying is finished.' && (
             <div className="mt-4">
               <h5>Function URL:</h5>
               <p>{infoLink}</p>
