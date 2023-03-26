@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import { useLocation } from 'react-router-dom';
+import {ulocation} from '../components/Layout'
 
 function CreateNew() {
   const [uuid, setUuid] = useState('');
@@ -67,7 +67,7 @@ function CreateNew() {
           setUploadStatus('Great! Your file has been uploaded.\nDeploying ...');
           var st = -2;
           var count = 0
-          while(st!=3&&st!=4&&count<60){
+          while(st!=3&&st!=4&&count<60&&ulocation=='/create'){
             const response = await handleGetStatus()
             st = response.status
             setInfoLink(response.endpoint)

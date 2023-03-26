@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import {ulocation} from '../components/Layout'
 
 function UpdateFunction() {
   const [uuid, setUuid] = useState('');
@@ -30,6 +31,7 @@ function UpdateFunction() {
     }
   };
 
+
   const handleUpload = () => {
     if (!file) {
       alert('Please select a file to upload.');
@@ -52,7 +54,7 @@ function UpdateFunction() {
           setUploadStatus('Great! Your file has been Transferred.\nDeploying ...');
           var st = -2;
           var count1 = 0;
-          while(st!==3 && st!==4 && count1<60){
+          while(st!==3 && st!==4 && count1<60&&ulocation=='/update'){
             await handleGetStatus()
             st = status.status
             setInfoLink(status.endpoint)

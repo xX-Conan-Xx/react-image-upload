@@ -6,8 +6,11 @@ type Props = {
   pageTitle: string;
 };
 
+export var ulocation = '';
+
 const Layout = ({ children, pageTitle }: Props) => {
   const location = useLocation();
+  ulocation = location.pathname;
   // console.log(location)
 
   return (
@@ -82,5 +85,3 @@ const Layout = ({ children, pageTitle }: Props) => {
 };
 
 export default Layout;
-
-
