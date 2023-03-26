@@ -10,12 +10,16 @@ function DeleteFunction() {
   };
 
   const handleGetStatus = async () => {
-    const res = await axios.post("https://faas-be.cyifan.dev/faas/delete", {"uuid" : uuid });
-    console.log(res)
-    const endpoint = res.data['functionEndpoint'];
-    const status = res.data.status;
-    setStatus({ endpoint, status });
-    alert('Delete Already.')
+    try{
+      const res = await axios.post("https://faas-be.cyifan.dev/faas/delete", {"uuid" : uuid });
+      console.log(res)
+      const endpoint = res.data['functionEndpoint'];
+      const status = res.data.status;
+      setStatus({ endpoint, status });
+      alert('Delete Already.')
+    }catch(error){
+      alert('UUID does not exist!!!')
+    }
   };
 
   return (

@@ -141,6 +141,10 @@ function CreateNew() {
       return;
     }
 
+    setUploadStatus("");
+    setFile(null)
+
+
     // Uploading the file using the fetch API to the server
     fetch('https://faas-be.cyifan.dev/faas/new', {
       method: 'POST',
@@ -164,9 +168,12 @@ function CreateNew() {
       return;
     }
 
-    setUploadStatus('Deploying...');
-
     const formData = new FormData();
+    if(!file.name.endsWith('.zip')){
+      alert('Please select a zip file to upload.');
+      return;
+    }
+    setUploadStatus('Uploading ...');
     formData.append('file', file, uuid+".zip");
 
     fetch(`https://faas-be.cyifan.dev/faas/uploadCode`, {
@@ -177,7 +184,7 @@ function CreateNew() {
         setStatusCode(res.status);
         console.log(res.status);
         if (res.status === 200) {
-          setUploadStatus('Great! Your file has been Transferred.\nDeploying ...');
+          setUploadStatus('Great! Your file has been uploaded.\nDeploying ...');
           var st = -2;
           var count = 0
           while(st!=3&&st!=4&&count<10){
