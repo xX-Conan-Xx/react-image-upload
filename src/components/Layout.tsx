@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 type Props = {
   children: React.ReactNode;
@@ -7,6 +7,9 @@ type Props = {
 };
 
 const Layout = ({ children, pageTitle }: Props) => {
+  const location = useLocation();
+  // console.log(location)
+
   return (
     <div className="container-fluid">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -34,32 +37,32 @@ const Layout = ({ children, pageTitle }: Props) => {
               <ul className="nav flex-column">
                 <li className="nav-item">
                   <Link to="/" className="nav-link">
-                    Home
+                  {location.pathname === '/' ? <strong>Home</strong> : 'Home'}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/about" className="nav-link">
-                    About
+                  {location.pathname === '/about' ? <strong>About</strong> : 'About'}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/create" className="nav-link">
-                    Create a function
+                  {location.pathname === '/create' ? <strong>Create a function</strong> : 'Create a function'}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/update" className="nav-link">
-                    Update a function
+                  {location.pathname === '/update' ? <strong>Update a function</strong> : 'Update a function'}
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/delete" className="nav-link">
-                    Delete a function 
+                  {location.pathname === '/delete' ? <strong>Delete a function</strong> : 'Delete a function'}
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/get" className="nav-link">
-                    Get the link
+                  <Link to="/get" className= "nav-link">
+                  {location.pathname === '/get' ? <strong>Get the link</strong> : 'Get the link'}
                   </Link>
                 </li>
               </ul>
@@ -79,6 +82,5 @@ const Layout = ({ children, pageTitle }: Props) => {
 };
 
 export default Layout;
-
 
 

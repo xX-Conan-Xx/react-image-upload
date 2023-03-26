@@ -52,7 +52,7 @@ function UpdateFunction() {
           setUploadStatus('Great! Your file has been Transferred.\nDeploying ...');
           var st = -2;
           var count1 = 0;
-          while(st!==3 && st!==4 && count1<10){
+          while(st!==3 && st!==4 && count1<60){
             await handleGetStatus()
             st = status.status
             setInfoLink(status.endpoint)
@@ -60,7 +60,7 @@ function UpdateFunction() {
             count1 = count1+1
             await new Promise(resolve => setTimeout(resolve, 5000));
           }
-          if (count1>=10){
+          if (count1>=60){
             setUploadStatus('Deploy timeout.')
           }else{
             setUploadStatus('The deploying is finished.')
