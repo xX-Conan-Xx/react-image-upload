@@ -92,6 +92,8 @@ function UpdateFunction() {
       {(status.status == 3 || status.status == 4 || status.status == 1) && (
         <div className="mt-4">
           <h4>Upload Code:</h4>
+          <p>Your file needs to be a zip file that contains your code and all dependencies.</p>
+          <p>Entry point for your founction must have a filename of index.py and function definition of lamda_hander(event,contex)</p>
           <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} />
           <button className="btn btn-primary mt-2" onClick={handleUpload} disabled={!file}>
             Upload

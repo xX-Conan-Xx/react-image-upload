@@ -43,11 +43,11 @@ const Layout = ({ children, pageTitle }: Props) => {
                   {location.pathname === '/' ? <strong>Home</strong> : 'Home'}
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link to="/about" className="nav-link">
                   {location.pathname === '/about' ? <strong>About</strong> : 'About'}
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link to="/create" className="nav-link">
                   {location.pathname === '/create' ? <strong>Create a function</strong> : 'Create a function'}
